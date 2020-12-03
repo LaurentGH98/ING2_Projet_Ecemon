@@ -1,0 +1,160 @@
+# depslib dependency file v1.0
+1604529089 source:c:\users\laurent\documents\ing_2\informatique\chapitre_5\ecemon_ghiassi_theiller_villamizar\carte.cpp
+	<iostream>
+	"Carte.h"
+
+1604525505 source:c:\users\laurent\documents\ing_2\informatique\chapitre_5\ecemon_ghiassi_theiller_villamizar\collection.cpp
+
+1604531482 source:c:\users\laurent\documents\ing_2\informatique\chapitre_5\ecemon_ghiassi_theiller_villamizar\creature.cpp
+	<iostream>
+	"Creature.h"
+
+1604530537 source:c:\users\laurent\documents\ing_2\informatique\chapitre_5\ecemon_ghiassi_theiller_villamizar\deck.cpp
+	<iostream>
+	"Deck.h"
+
+1604531099 source:c:\users\laurent\documents\ing_2\informatique\chapitre_5\ecemon_ghiassi_theiller_villamizar\energie.cpp
+	<iostream>
+	"Energie.h"
+
+1604528274 source:c:\users\laurent\documents\ing_2\informatique\chapitre_5\ecemon_ghiassi_theiller_villamizar\joueur.cpp
+	<iostream>
+	"Joueur.h"
+
+1604531462 source:c:\users\laurent\documents\ing_2\informatique\chapitre_5\ecemon_ghiassi_theiller_villamizar\main.cpp
+	<iostream>
+
+1604525312 source:c:\users\laurent\documents\ing_2\informatique\chapitre_5\ecemon_ghiassi_theiller_villamizar\partie.cpp
+
+1604531324 source:c:\users\laurent\documents\ing_2\informatique\chapitre_5\ecemon_ghiassi_theiller_villamizar\speciale.cpp
+	<iostream>
+	"Speciale.h"
+
+1604528242 c:\users\laurent\documents\ing_2\informatique\chapitre_5\ecemon_ghiassi_theiller_villamizar\joueur.h
+	"Deck.h"
+
+1604530537 c:\users\laurent\documents\ing_2\informatique\chapitre_5\ecemon_ghiassi_theiller_villamizar\deck.h
+	"Carte.h"
+	<queue>
+
+1604530735 c:\users\laurent\documents\ing_2\informatique\chapitre_5\ecemon_ghiassi_theiller_villamizar\carte.h
+
+1604531394 c:\users\laurent\documents\ing_2\informatique\chapitre_5\ecemon_ghiassi_theiller_villamizar\creature.h
+	"Carte.h"
+
+1604531099 c:\users\laurent\documents\ing_2\informatique\chapitre_5\ecemon_ghiassi_theiller_villamizar\energie.h
+	"Carte.h"
+
+1604531324 c:\users\laurent\documents\ing_2\informatique\chapitre_5\ecemon_ghiassi_theiller_villamizar\speciale.h
+	"Carte.h"
+
+1606912133 source:c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\carte.cpp
+	<iostream>
+	"Carte.h"
+
+1606912133 c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\carte.h
+	"Attaque.h"
+	"Defense.h"
+
+1607021784 source:c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\collection.cpp
+	<iostream>
+	"Collection.h"
+	"Creature.h"
+	"Energie.h"
+	"Speciale.h"
+	<algorithm>
+	<ctime>
+	<cstdlib>
+
+1606921825 source:c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\creature.cpp
+	<iostream>
+	"Creature.h"
+
+1606778622 c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\creature.h
+	"Carte.h"
+	"Attaque.h"
+	"Defense.h"
+
+1604530537 source:c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\deck.cpp
+	<iostream>
+	"Deck.h"
+
+1604530537 c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\deck.h
+	"Carte.h"
+	<queue>
+
+1606340661 source:c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\energie.cpp
+	<iostream>
+	"Energie.h"
+
+1606340661 c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\energie.h
+	"Carte.h"
+
+1606919162 source:c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\joueur.cpp
+	<iostream>
+	"Joueur.h"
+	<vector>
+	<sstream>
+
+1606919162 c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\joueur.h
+	"Collection.h"
+	"Creature.h"
+
+1606341099 source:c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\main.cpp
+	<iostream>
+	"fonctions.h"
+
+1604525312 source:c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\partie.cpp
+
+1607021784 source:c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\speciale.cpp
+	<iostream>
+	"Speciale.h"
+
+1607021784 c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\speciale.h
+	"Carte.h"
+
+1606397789 c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\collection.h
+	"Carte.h"
+	<vector>
+
+1606232400 source:c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\boutique.cpp
+	<iostream>
+	"Boutique.h"
+
+1606233423 c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\boutique.h
+	<vector>
+	<iostream>
+	"Carte.h"
+	"Joueur.h"
+
+1606327885 source:c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\attaque.cpp
+	<iostream>
+	"Attaque.h"
+
+1606327780 c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\attaque.h
+
+1606328181 source:c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\defense.cpp
+	<iostream>
+	"Defense.h"
+
+1606328103 c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\defense.h
+
+1607021784 source:c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\fonctions.cpp
+	"fonctions.h"
+	<algorithm>
+	<ctime>
+	<cstdlib>
+
+1606930484 c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\fonctions.h
+	<iostream>
+	"Carte.h"
+	"Joueur.h"
+	"Collection.h"
+	"Boutique.h"
+	"Creature.h"
+	"Energie.h"
+	"Speciale.h"
+	"Attaque.h"
+	"Defense.h"
+	<fstream>
+
