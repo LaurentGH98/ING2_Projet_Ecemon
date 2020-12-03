@@ -90,6 +90,10 @@ Defense* Carte::getDefense1() const
 
 }
 
+bool Carte::getIsAttackBoosted() const {}
+bool Carte::getIsAttackDoubled() const {}
+bool Carte::getIsRenvoiActive() const {}
+
 //getter virtuel pour Energies
 std::string Carte::getTypeEnergie() const
 {
@@ -177,6 +181,10 @@ void Carte::setDefense1(Defense* defense1)
 
 }
 
+void Carte::setIsAttackBoosted(bool isAttackBoosted){}
+void Carte::setIsAttackDoubled(bool isAttackDoubled){}
+void Carte::setIsRenvoiActive(bool isRenvoiActive){}
+
 //setter virtuel pour Energies
 void Carte::setTypeEnergie(std::string typeEnergie)
 {
@@ -202,7 +210,7 @@ void Carte::attaquer(Carte* creatureCible, Attaque* attaqueChoisie)
 
 }
 
-void Carte::recevoirDegats(Attaque* attaque)
+void Carte::recevoirDegats(Attaque* attaque, Carte* creatureAttaquante)
 {
 
 }

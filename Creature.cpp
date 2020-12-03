@@ -18,7 +18,10 @@ Creature::Creature(std::string nom, std::string description, std::string type, i
     Carte(nom, description, type), m_vie(vie), m_defense(defense), m_pointsEnergieEG(pointsEnergieEG), m_pointsEnergieG(pointsEnergieG),
      m_pointsEnergieC(pointsEnergieC), m_pointsEnergieD(pointsEnergieD), m_pointsEnergieED(pointsEnergieED), m_attaque1(attaque1), m_attaque2(attaque2), m_defense1(defense1)
 {
-
+    //De base aucun boost n'est actif
+    m_isAttackBoosted = false;
+    m_isAttackDoubled = false;
+    m_isRenvoiActive  = false;
 }
 
 Creature::~Creature()
@@ -78,6 +81,21 @@ Defense* Creature::getDefense1() const
     return m_defense1;
 }
 
+bool Creature::getIsAttackBoosted() const
+{
+     return m_isAttackBoosted;
+}
+
+bool Creature::getIsAttackDoubled() const
+{
+    return m_isAttackDoubled;
+}
+
+bool Creature::getIsRenvoiActive() const
+{
+    return m_isRenvoiActive;
+}
+
 ///Setters
 
 void Creature::setVie(int vie)
@@ -130,6 +148,21 @@ void Creature::setDefense1(Defense* defense1)
     m_defense1=defense1;
 }
 
+void Creature::setIsAttackBoosted(bool isAttackBoosted)
+{
+    m_isAttackBoosted=isAttackBoosted;
+}
+
+void Creature::setIsAttackDoubled(bool isAttackDoubled)
+{
+    m_isAttackDoubled=isAttackDoubled;
+}
+
+void Creature::setIsRenvoiActive(bool isRenvoiActive)
+{
+    m_isRenvoiActive=isRenvoiActive;
+}
+
 ///Méthodes de Creature
 void Creature::attaquer(Carte* creatureCible, Attaque* attaqueChoisie)
 {
@@ -138,24 +171,65 @@ void Creature::attaquer(Carte* creatureCible, Attaque* attaqueChoisie)
     std::cout << "Description : " << attaqueChoisie->getDescription() << std::endl;
 
     //La créature cible reçoit des dégats
-    creatureCible->recevoirDegats(attaqueChoisie);
+    Carte* currentCreature = this; ///caste la créature en carte
+    creatureCible->recevoirDegats(attaqueChoisie, currentCreature);
 }
 
-void Creature::recevoirDegats(Attaque* attaque)
+void Creature::recevoirDegats(Attaque* attaque, Carte* creatureAttaquante)
 {
-    //Si la defense de la cible est supérieure ou égale aux dégats de l'attaque, la créature perd 0
-    if(this->getDefense() >= attaque->getPointsDeDegats())
+    ///Si le boost attaque +2 est actif
+    if(creatureAttaquante->getIsAttackBoosted())
     {
-        std::cout<<this->getNom()<<" se defend completement de l attaque. Aucun degat recu."<<std::endl;
+        if(this->getDefense() >= (attaque->getPointsDeDegats() + 2)){
+            std::cout<<this->getNom()<<" se defend completement de l attaque. Aucun degat recu."<<std::endl;
+        }
+        else{
+            std::cout<<this->getNom()<<" a une defense de "<<this->getDefense()<<", la creature perd donc : "<<attaque->getPointsDeDegats()-this->getDefense()<<" point(s) de vie." << std::endl;
+            this->setVie(this->getVie() + this->getDefense() - attaque->getPointsDeDegats() - 2);
+        }
     }
-    //sinon, il perd de la vie
-    else
+    ///Si l'attaque doublée est activée
+    else if(creatureAttaquante->getIsAttackDoubled())
     {
-        std::cout<<this->getNom()<<" a une defense de "<<this->getDefense()<<", la creature perd donc : "<<attaque->getPointsDeDegats()-this->getDefense()<<" point(s) de vie." << std::endl;
-        this->setVie(this->getVie() + this->getDefense() - attaque->getPointsDeDegats());
+        if(this->getDefense() >= (attaque->getPointsDeDegats()*2)){
+            std::cout<<this->getNom()<<" se defend completement de l attaque. Aucun degat recu."<<std::endl;
+        }
+        else{
+            std::cout<<this->getNom()<<" a une defense de "<<this->getDefense()<<", la creature perd donc : "<<attaque->getPointsDeDegats()-this->getDefense()<<" point(s) de vie." << std::endl;
+            this->setVie(this->getVie() + this->getDefense() - attaque->getPointsDeDegats()*2);
+        }
     }
+    ///Si le renvoi est activé
+    else if(creatureAttaquante->getIsRenvoiActive())
+    {
+        if(creatureAttaquante->getDefense() >= (attaque->getPointsDeDegats())){
+            std::cout<<creatureAttaquante->getNom()<<" se defend completement de l attaque. Aucun degat recu malgré le renvoi."<<std::endl;
+        }
+        else{
+            std::cout<<"RENVOI DE DEGATS ! " << creatureAttaquante->getNom()<<" a une defense de "<<creatureAttaquante->getDefense()<<", la creature perd donc : "<<attaque->getPointsDeDegats()-creatureAttaquante->getDefense()<<" point(s) de vie." << std::endl;
+            creatureAttaquante->setVie(creatureAttaquante->getVie() + creatureAttaquante->getDefense() - attaque->getPointsDeDegats());
+        }
+    }
+    ///Si aucun boost n'est activé
+    else{
+        //Si la defense de la cible est supérieure ou égale aux dégats de l'attaque, la créature perd 0
+        if(this->getDefense() >= attaque->getPointsDeDegats())
+        {
+            std::cout<<this->getNom()<<" se defend completement de l attaque. Aucun degat recu."<<std::endl;
+        }
+        //sinon, il perd de la vie
+        else
+        {
+            std::cout<<this->getNom()<<" a une defense de "<<this->getDefense()<<", la creature perd donc : "<<attaque->getPointsDeDegats()-this->getDefense()<<" point(s) de vie." << std::endl;
+            this->setVie(this->getVie() + this->getDefense() - attaque->getPointsDeDegats());
+        }
+    }
+
     //après une attaque, ses points de défense accumulés disparaissent
     this->setDefense(0);
+    ///Et les boost non permanants de la créature disparaissent
+    creatureAttaquante->setIsAttackDoubled(false);
+    creatureAttaquante->setIsRenvoiActive(false);
 }
 
 void Creature::seDefendre(Defense* defense)

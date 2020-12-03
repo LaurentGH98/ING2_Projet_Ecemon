@@ -51,6 +51,6 @@ void jouer(Joueur* joueur1, Joueur* joueur2); //on lance enfin le jeu !
 
 void jouer(Joueur* joueur1); //fonction de test (un seul joueur donc plus rapide de lancer une partie)
 
-
+void jouerCarteSpeciale(Joueur* joueur, Joueur* joueurCible, Carte* cartePiochee);//active l'effet d'une carte spéciale
 
 #endif // FONCTIONS_H_INCLUDED

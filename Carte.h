@@ -36,6 +36,10 @@ public :
 
     virtual Defense* getDefense1() const;
 
+    virtual bool getIsAttackBoosted() const;
+    virtual bool getIsAttackDoubled() const;
+    virtual bool getIsRenvoiActive() const;
+
     //getter virtuel pour Energies
     virtual std::string getTypeEnergie() const;
 
@@ -63,6 +67,11 @@ public :
 
     virtual void setDefense1(Defense* defense1);
 
+    virtual void setIsAttackBoosted(bool isAttackBoosted);
+    virtual void setIsAttackDoubled(bool isAttackDoubled);
+    virtual void setIsRenvoiActive(bool isRenvoiActive);
+
+
     //setter virtuel pour Energies
     virtual void setTypeEnergie(std::string typeEnergie);
 
@@ -75,7 +84,7 @@ public :
     virtual void attaquer(Carte* creatureCible, Attaque* attaqueChoisie); //La créature attaque la créature cible de l'adversaire avec
                                                                           //une attaque choisie : la cible perd des points de vie
 
-    virtual void recevoirDegats(Attaque* attaque); //pour que la créature cible perde des points de vie
+    virtual void recevoirDegats(Attaque* attaque, Carte* creatureAttaquante); //pour que la créature cible perde des points de vie
 
     //Si la créature inflige des dégâts à la créature cible supérieurs à ses points de vie restants, les pv du joueur adverse diminuent
     //Dans ce cas on mettra dans le tour de jeu : si getPV(creatureCible)<0, on appelle joueurAdverse->recevoirDegats

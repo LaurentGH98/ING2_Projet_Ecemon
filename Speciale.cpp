@@ -57,6 +57,8 @@ Kamikaze::~Kamikaze()
 
 }
 
+//premier bool : isPermanant
+//deucieme bool: isRecyclable
 BoostVie::BoostVie() :
     Speciale("BoostVie",
               "L ego de votre creature gonfle ! Elle gagne 5 points de vie. 1 seule utilisation.", "Speciale", false, true)

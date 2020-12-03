@@ -78,8 +78,8 @@ void afficherBoutique()
     std::cout << "-6)Lassalle             cout : 5      |                                          |         -21)Renvoi         cout : 6" << std::endl;
     std::cout << "-7)Fillon               cout : 5      |                                          |" << std::endl;
     std::cout << "-8)Sarkozy              cout : 5      |                                          |" << std::endl;
-    std::cout << "-9)Jean-Marie Lepen     cout : 5      |                                          |"  << std::endl;
-    std::cout << "-10)Marine Lepen        cout : 5      |                                          |" << std::endl << std::endl;
+    std::cout << "-9)JMLepen              cout : 5      |                                          |"  << std::endl;
+    std::cout << "-10)MLepen              cout : 5      |                                          |" << std::endl << std::endl;
 
 }
 
@@ -177,12 +177,12 @@ void creerJoueur()
             break;
         case 9 :
             argent=argent-5;
-            std::cout << "Vous avez choisi Jean-Marie Lepen,il vous reste " << argent << "euros." << std::endl;
+            std::cout << "Vous avez choisi JMLepen,il vous reste " << argent << "euros." << std::endl;
             tableauDeNumeros.push_back(9);
             break;
         case 10 :
             argent=argent-5;
-            std::cout << "Vous avez choisi Marine Lepen,il vous reste " << argent << "euros." << std::endl;
+            std::cout << "Vous avez choisi MLepen,il vous reste " << argent << "euros." << std::endl;
             tableauDeNumeros.push_back(10);
             break;
         case 11 :
@@ -277,10 +277,10 @@ void creerJoueur()
             tableauNomsDeCartes.push_back("Sarkozy");
             break;
         case 9 :
-            tableauNomsDeCartes.push_back("Jean-Marie Lepen");
+            tableauNomsDeCartes.push_back("JMLepen");
             break;
         case 10 :
-            tableauNomsDeCartes.push_back("Marine Lepen");
+            tableauNomsDeCartes.push_back("MLepen");
             break;
         case 11 :
             tableauNomsDeCartes.push_back("Extreme Gauche");
@@ -970,7 +970,7 @@ void afficherTerrain(Joueur* joueur) //affichage pas très propre car on appelle 
     {
         std::cout << "Creature active : " << joueur->getCreatureActive()->getNom() << std::endl;
         std::cout << "Description : " << joueur->getCreatureActive()->getDescription() << std::endl;
-        std::cout << "Il reste " << joueur->getCreatureActive()->getVie() << " points de vie a la Creature" << std::endl;
+        std::cout << "Il reste " << joueur->getCreatureActive()->getVie() << " points de vie a la Creature" << std::endl <<std::endl;
 
         //on affiche aussi ses attaques avec le nb d'énergies et le type recquis, pour aider le joueur lors de son tour
         //attaque1
@@ -1028,6 +1028,9 @@ void afficherTerrain(Joueur* joueur) //affichage pas très propre car on appelle 
     else
         std::cout << "En ce moment le joueur n'a pas de Creature sur le Terrain" << std::endl;
 
+
+    std::cout<<std::endl;
+
     ///carte(s) energie active(s) ?
     if(joueur->getEnergiesActives().size()!=0) //si il y a des energies actives...
     {
@@ -1040,6 +1043,8 @@ void afficherTerrain(Joueur* joueur) //affichage pas très propre car on appelle 
     }
     else
         std::cout << "Aucune energie posee sur le Terrain pour le moment." << std::endl;
+
+    std::cout<<std::endl;
 
     ///carte Spéciale active ?
     if(joueur->getSpecialeActive()!=NULL)
@@ -1456,6 +1461,9 @@ void tourDeJeu(Joueur* joueur, Joueur* joueurCible) //joueur cible est utile lor
 
                     //et la nouvelle devient la spéciale active
                     joueur->setSpecialeActive(cartePiochee);
+
+                    //son effet s'active instant'
+                    jouerCarteSpeciale(joueur, joueurCible, cartePiochee);
                 }
 
                 else //si pas de spéciale active...
@@ -1958,11 +1966,11 @@ void jouer(Joueur* joueur1, Joueur* joueur2)
             }
             if (elem==9)
             {
-                Flux<<"Jean-Marie Lepen"<<std::endl;
+                Flux<<"JMLepen"<<std::endl;
             }
             if (elem==10)
             {
-                Flux<<"Marine Lepen"<<std::endl;
+                Flux<<"MLepen"<<std::endl;
             }
             if (elem==11)
             {
@@ -2159,11 +2167,11 @@ void jouer(Joueur* joueur1, Joueur* joueur2)
             }
             if (elem==9)
             {
-                Flux<<"Jean-Marie Lepen"<<std::endl;
+                Flux<<"JMLepen"<<std::endl;
             }
             if (elem==10)
             {
-                Flux<<"Marine Lepen"<<std::endl;
+                Flux<<"MLepen"<<std::endl;
             }
             if (elem==11)
             {
@@ -2224,6 +2232,42 @@ void jouer(Joueur* joueur1, Joueur* joueur2)
     ///Retourner au menu -> se fait instantanément lorsque les conditions d'arrêt de la boucle de jeu sont remplies
 }
 
+void jouerCarteSpeciale(Joueur* joueur, Joueur* joueurCible, Carte* cartePiochee)
+{
+    if(cartePiochee->getNom() == "Kamikaze")
+    {
+        //crea_active meurt
+        joueur->getGraveyard().push_back(joueur->getCreatureActive());
+        joueur->setCreatureActive(NULL);
+        //crea_active ennemie prend 10 degats
+        joueurCible->getCreatureActive()->recevoirDegats(new Attaque("kamikaze", "la cible perd 10 points de degats", 10, 0, "Aucun"), joueur->getCreatureActive());
+    }
+    else if(cartePiochee->getNom() == "BoostVie")
+    {
+        //vie crea + 5
+        joueur->getCreatureActive()->setVie(joueur->getCreatureActive()->getVie() + 5);
+    }
+    else if(cartePiochee->getNom() == "BoostDef")
+    {
+        //def crea + 2
+        joueur->getCreatureActive()->setDefense(joueur->getCreatureActive()->getDefense() + 2);
+    }
+    else if(cartePiochee->getNom() == "BoostAttaque")
+    {
+        //atck crea + 2
+        joueur->getCreatureActive()->setIsAttackBoosted(true);
+    }
+    else if(cartePiochee->getNom() == "Attaquex2")
+    {
+        //atck crea x 2
+        joueur->getCreatureActive()->setIsAttackDoubled(true);
+    }
+    else if(cartePiochee->getNom() == "Renvoi")
+    {
+        //renvoi
+        joueur->getCreatureActive()->setIsRenvoiActive(true);
+    }
+}
 
 
 

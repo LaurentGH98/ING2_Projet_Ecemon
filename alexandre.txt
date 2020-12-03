@@ -1,8 +1,8 @@
-Melenchon
-Hollande
 Lassalle
+Fillon
 Sarkozy
-Jean-Marie Lepen
+JMLepen
+MLepen
 Extreme Gauche
 Extreme Gauche
 Extreme Gauche
@@ -18,8 +18,8 @@ Droite
 Extreme Droite
 Extreme Droite
 Extreme Droite
-16
-18
-19
-20
-21
+BoostVie
+BoostDef
+BoostAttaque
+Attaquex2
+Renvoi
