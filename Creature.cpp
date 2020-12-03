@@ -184,7 +184,7 @@ void Creature::recevoirDegats(Attaque* attaque, Carte* creatureAttaquante)
             std::cout<<this->getNom()<<" se defend completement de l attaque. Aucun degat recu."<<std::endl;
         }
         else{
-            std::cout<<this->getNom()<<" a une defense de "<<this->getDefense()<<", la creature perd donc : "<<attaque->getPointsDeDegats()-this->getDefense()<<" point(s) de vie." << std::endl;
+            std::cout<<this->getNom()<<" a une defense de "<<this->getDefense()<<", la creature perd donc : "<<attaque->getPointsDeDegats()-this->getDefense()+2<<" point(s) de vie." << std::endl;
             this->setVie(this->getVie() + this->getDefense() - attaque->getPointsDeDegats() - 2);
         }
     }
@@ -195,7 +195,7 @@ void Creature::recevoirDegats(Attaque* attaque, Carte* creatureAttaquante)
             std::cout<<this->getNom()<<" se defend completement de l attaque. Aucun degat recu."<<std::endl;
         }
         else{
-            std::cout<<this->getNom()<<" a une defense de "<<this->getDefense()<<", la creature perd donc : "<<attaque->getPointsDeDegats()-this->getDefense()<<" point(s) de vie." << std::endl;
+            std::cout<<this->getNom()<<" a une defense de "<<this->getDefense()<<", la creature perd donc : "<<attaque->getPointsDeDegats()*2-this->getDefense()<<" point(s) de vie." << std::endl;
             this->setVie(this->getVie() + this->getDefense() - attaque->getPointsDeDegats()*2);
         }
     }

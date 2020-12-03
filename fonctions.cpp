@@ -73,7 +73,13 @@ void menu()
 void afficherBoutique()
 {
     std::cout << "La boutique se compose donc de : " << std::endl << std::endl;
-    std::cout << "Cartes CREATURES                                Cartes ENERGIE                             Cartes Speciales" << std::endl << std::endl;
+    SetConsoleTextAttribute(hConsole, 12);
+    std::cout << "Cartes CREATURES";
+    SetConsoleTextAttribute(hConsole, 2);
+    std::cout<<"                                Cartes ENERGIE";
+    SetConsoleTextAttribute(hConsole, 6);
+    std::cout<<"                             Cartes Speciales" << std::endl << std::endl;
+    SetConsoleTextAttribute(hConsole, 7);
     std::cout << "-1)Melenchon            cout : 5      |         -11)Extreme Gauche   cout : 3    |         -16)Kamikaze       cout : 6" << std::endl;
     std::cout << "-2)Marchais             cout : 5      |         -12)Gauche           cout : 3    |         -17)BoostVie       cout : 6" << std::endl;
     std::cout << "-3)Hamon                cout : 5      |         -13)Centre           cout : 3    |         -18)BoostDef       cout : 6" << std::endl;
@@ -105,7 +111,9 @@ void creerJoueur()
     ///entrer le nom d'un joueur
     std::string nom;
     std::cout << "Vous allez creer un joueur, saisissez son nom" << std::endl;
+    SetConsoleTextAttribute(hConsole, 2);
     std::cin >> nom;
+    SetConsoleTextAttribute(hConsole, 7);
     std::cout << "Le joueur s'appelle donc " << nom << std::endl;
 
     ///on sauvegarde son nom, ou même pas d'ailleurs puisque le fichier porte le nom du joueur
@@ -534,7 +542,9 @@ void lancerPartie(Joueur* joueur)
     while (conditionArret==0) //tant que le fichier ne s'ouvre pas on redemande une sausie du nom
     {
         std::cout << "Saisir le nom du joueur, deja existant" << std::endl;
+        SetConsoleTextAttribute(hConsole, 2);
         std::cin >> nomJoueur;
+        SetConsoleTextAttribute(hConsole, 7);
         std::ifstream Flux((nomJoueur+".txt").c_str());//ouverture du fichier en lecture
         if(Flux)  //On teste si tout est OK
         {
@@ -645,7 +655,10 @@ void lancerPartie(Joueur* joueur)
 
     ///2)le joueur ajoute des cartes, une par une, à son deck depuis sa collection
     std::cout << std::endl;
-    std::cout << "A partir de cette collection, former un deck de 16 cartes : 3 Creatures, 10 Energies, 3 Speciales" << std::endl;
+    std::cout << "A partir de cette collection, former un deck de";
+    SetConsoleTextAttribute(hConsole, 12);
+    std::cout << "16 cartes : 3 Creatures, 10 Energies, 3 Speciales" << std::endl;
+    SetConsoleTextAttribute(hConsole, 7);
     std::cout << "Saisissez les numeros des cartes que vous voulez, pour creer votre deck" << std::endl;
     int choix;
 
@@ -1450,8 +1463,11 @@ void tourDeJeu(Joueur* joueur, Joueur* joueurCible) //joueur cible est utile lor
     std::cout << std::endl;
     SetConsoleTextAttribute(hConsole, 1);
     std::cout << "---------------------------------------------------------------------------------------------------" << std::endl;
-    SetConsoleTextAttribute(hConsole, 5);
+    SetConsoleTextAttribute(hConsole, 7);
+
+    SetConsoleTextAttribute(hConsole, 6);
     std::cout << "TOUR DE " << joueur->getNom() << std::endl;
+    SetConsoleTextAttribute(hConsole, 7);
     ///le joueur pioche une carte de son deck (c'est toujours celle qui est en tête)
     std::cout << "Carte piochee : " << std::endl;
     Carte* cartePiochee = new Carte;
@@ -1638,8 +1654,11 @@ void tourDeJeu(Joueur* joueur, Joueur* joueurCible) //joueur cible est utile lor
         std::cout<<std::endl;
         std::cout << "Souhaitez vous attaquer ou defendre ?" << std::endl;
         afficherAttaquesDispo(joueur); //affiche les attaques disponibles en fonction des énergies actives
-        std::cout << "1)Attaquer" << std::endl << "2)Defendre" << std::endl;
-
+        SetConsoleTextAttribute(hConsole, 12);
+        std::cout << "1)Attaquer" << std::endl;
+        SetConsoleTextAttribute(hConsole, 3);
+        std::cout << "2)Defendre" << std::endl;
+        SetConsoleTextAttribute(hConsole, 7);
         int choix=0;
 
         while (choix!=1 && choix!=2)
