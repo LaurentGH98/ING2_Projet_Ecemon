@@ -3,10 +3,14 @@
 #include <ctime>
 #include <cstdlib>
 
+HANDLE hConsole;
+
 ///--------------------------------------------------MENU--------------------------------------------------------
 using namespace std;
 void menu()
 {
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE); //Pour écrire en couleur dans la console
+
     bool boucle=true;
     int choix=0;
     Joueur* joueur1 = new Joueur;
@@ -921,7 +925,9 @@ void choixCarteEnjeu(Joueur* joueur)
     numeroCarteEnjeu = rand()%(joueur->getClasseCollec()->GetCollection().size()-1-0+1)+0;
     CarteEnjeu = joueur->getClasseCollec()->GetCollection()[numeroCarteEnjeu];
     joueur->setCarteEnjeu(CarteEnjeu); //on la stocke dans l'attribut carteEnjeu du joueur
+    SetConsoleTextAttribute(hConsole, 6);
     std::cout << "La carte enjeu choisie aleatoirement dans la collection de  " << joueur->getNom() << " est : " << joueur->getCarteEnjeu()->getNom() << std::endl;
+    SetConsoleTextAttribute(hConsole, 7);
 }
 
 
@@ -955,9 +961,13 @@ void initaliserJoueur(Joueur* joueur)
 void afficherTerrain(Joueur* joueur) //affichage pas très propre car on appelle 2 fois, 1 fois par joueur
 {
     std::cout << std::endl;
+    SetConsoleTextAttribute(hConsole, 1);
     std::cout << "---------------------------------------------------------------------------------------------------" << std::endl;
+    SetConsoleTextAttribute(hConsole, 5);
     ///Afficher le terrain (Vie du joueur, carte crea avec description, energies posées, spéciale active)
+    SetConsoleTextAttribute(hConsole, 5);
     std::cout << "Joueur : " << joueur->getNom() << std::endl;
+    SetConsoleTextAttribute(hConsole, 7);
 
     ///vie du joueur :
     std::cout << "Vous avez " << joueur->getVie() << " points de vie" << std::endl;
@@ -968,13 +978,22 @@ void afficherTerrain(Joueur* joueur) //affichage pas très propre car on appelle 
     ///carte Creature active ?
     if (joueur->getCreatureActive()!=NULL)
     {
+        SetConsoleTextAttribute(hConsole, 3);
         std::cout << "Creature active : " << joueur->getCreatureActive()->getNom() << std::endl;
+        SetConsoleTextAttribute(hConsole, 7);
         std::cout << "Description : " << joueur->getCreatureActive()->getDescription() << std::endl;
-        std::cout << "Il reste " << joueur->getCreatureActive()->getVie() << " points de vie a la Creature" << std::endl <<std::endl;
+        std::cout << "Il reste ";
+        SetConsoleTextAttribute(hConsole, 3);
+        std::cout << joueur->getCreatureActive()->getVie();
+        SetConsoleTextAttribute(hConsole, 7);
+        std::cout << " points de vie a la Creature" << std::endl <<std::endl;
 
         //on affiche aussi ses attaques avec le nb d'énergies et le type recquis, pour aider le joueur lors de son tour
         //attaque1
-        std::cout << "Attaque 1 : " << joueur->getCreatureActive()->getAttaque1()->getNom() << std::endl;
+        SetConsoleTextAttribute(hConsole, 12);
+        std::cout << "Attaque 1 : ";
+        SetConsoleTextAttribute(hConsole, 7);
+        std::cout << joueur->getCreatureActive()->getAttaque1()->getNom() << std::endl;
         std::cout << "Description : " << joueur->getCreatureActive()->getAttaque1()->getDescription() << std::endl;
         std::cout << "Necessite " << joueur->getCreatureActive()->getAttaque1()->getPointsEnergieRecquis() <<" point(s) d energie dans le type ";
         if (joueur->getCreatureActive()->getAttaque1()->getTypeEnergieRecquis()=="EG")
@@ -1001,7 +1020,10 @@ void afficherTerrain(Joueur* joueur) //affichage pas très propre car on appelle 
         std::cout << std::endl;
 
         //attaque 2
-        std::cout << "Attaque 2 : " << joueur->getCreatureActive()->getAttaque2()->getNom() << std::endl;
+        SetConsoleTextAttribute(hConsole, 12);
+        std::cout << "Attaque 1 : ";
+        SetConsoleTextAttribute(hConsole, 7);
+        std::cout << joueur->getCreatureActive()->getAttaque2()->getNom() << std::endl;
         std::cout << "Description : " << joueur->getCreatureActive()->getAttaque2()->getDescription() << std::endl;
         std::cout << "Necessite " << joueur->getCreatureActive()->getAttaque2()->getPointsEnergieRecquis() <<" point(s) d energie dans le type ";
         if (joueur->getCreatureActive()->getAttaque2()->getTypeEnergieRecquis()=="EG")
@@ -1035,7 +1057,10 @@ void afficherTerrain(Joueur* joueur) //affichage pas très propre car on appelle 
     if(joueur->getEnergiesActives().size()!=0) //si il y a des energies actives...
     {
         //on parcourt le vecteur et on affiche ses éléments (les énergies actives)
+        SetConsoleTextAttribute(hConsole, 6);
         std::cout << "Energie(s) active(s) : " << std::endl;
+        SetConsoleTextAttribute(hConsole, 7);
+
         for (auto &elem : joueur->getEnergiesActives())
         {
             std::cout << elem->getNom() << std::endl;
@@ -1125,6 +1150,15 @@ void defileJusquaCrea(Joueur* joueur)
 ///-------------------------------------------AFFICHE ATTAQUES DISPONIBLES-------------------------------------------------------------
 void afficherAttaquesDispo(Joueur* joueur)//affiche les attaques disponibles du joueur, avant qu'il ne fasse le choix d'attaquer ou défendre
 {
+
+
+    ///set toutes les energies à 0 pour le joueur
+    joueur->getCreatureActive()->setPointsEnergieEG(0);
+    joueur->getCreatureActive()->setPointsEnergieG(0);
+    joueur->getCreatureActive()->setPointsEnergieC(0);
+    joueur->getCreatureActive()->setPointsEnergieD(0);
+    joueur->getCreatureActive()->setPointsEnergieED(0);
+
     //on parcourt les énergies actives du joueur...
 
     for (auto &elem : joueur->getEnergiesActives())
@@ -1254,6 +1288,13 @@ void afficherAttaquesDispo(Joueur* joueur)//affiche les attaques disponibles du 
         }
         std::cout << std::endl;
     }
+    /*std::cout<<"-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_"<<std::endl;
+    std::cout<<"POINTS D ENERGIE DE LA CREATURE ACTIVE : "<<std::endl;
+    std::cout<<"DROITE : "<<joueur->getCreatureActive()->getPointsEnergieD()<<std::endl;
+    std::cout<<"XTREM DROITE : "<<joueur->getCreatureActive()->getPointsEnergieED()<<std::endl;
+    std::cout<<"GAUCHE : "<<joueur->getCreatureActive()->getPointsEnergieG()<<std::endl;
+    std::cout<<"XTREM GAUCHE : "<<joueur->getCreatureActive()->getPointsEnergieEG()<<std::endl;
+    std::cout<<"-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_"<<std::endl;*/
 }
 
 ///-------------------------------------------VERIFIE SI L ATTAQUE EST DISPONIBLE------------------------------------------------------
@@ -1407,15 +1448,19 @@ bool verifAttaque(int choix, Joueur* joueur)//retourne un booléen : true pour at
 void tourDeJeu(Joueur* joueur, Joueur* joueurCible) //joueur cible est utile lorsqu'on veut attaquer l'adversaire
 {
     std::cout << std::endl;
+    SetConsoleTextAttribute(hConsole, 1);
     std::cout << "---------------------------------------------------------------------------------------------------" << std::endl;
+    SetConsoleTextAttribute(hConsole, 5);
     std::cout << "TOUR DE " << joueur->getNom() << std::endl;
     ///le joueur pioche une carte de son deck (c'est toujours celle qui est en tête)
-    std::cout << "Carte en tete..." << std::endl;
+    std::cout << "Carte piochee : " << std::endl;
     Carte* cartePiochee = new Carte;
     cartePiochee = joueur->getClasseCollec()->GetDeck().front();
 
     ///on affiche son nom et sa description
+    SetConsoleTextAttribute(hConsole, 2);
     std::cout << cartePiochee->getNom() << std::endl;
+    SetConsoleTextAttribute(hConsole, 7);
     std::cout << "Description : " << cartePiochee->getDescription() << std::endl << std::endl;
 
 
@@ -1470,6 +1515,7 @@ void tourDeJeu(Joueur* joueur, Joueur* joueurCible) //joueur cible est utile lor
                 {
                     //la carte piochée devient directement la spéciale active
                     joueur->setSpecialeActive(cartePiochee);
+                    jouerCarteSpeciale(joueur, joueurCible, cartePiochee);
                 }
 
             }
@@ -1589,6 +1635,7 @@ void tourDeJeu(Joueur* joueur, Joueur* joueurCible) //joueur cible est utile lor
     ///Une fois que la carte est piochée et qu'on demande l'action au joueur, on lui demande si il veut Attaquer ou Défendre
     if (joueur->getCreatureActive()!=NULL)
     {
+        std::cout<<std::endl;
         std::cout << "Souhaitez vous attaquer ou defendre ?" << std::endl;
         afficherAttaquesDispo(joueur); //affiche les attaques disponibles en fonction des énergies actives
         std::cout << "1)Attaquer" << std::endl << "2)Defendre" << std::endl;
@@ -1742,7 +1789,9 @@ void jouer(Joueur* joueur1, Joueur* joueur2)
         joueur2=joueurTemporaire;
     }
 
+    SetConsoleTextAttribute(hConsole, 6);
     std::cout << "C est " << joueur1->getNom() << " qui commence !" << std::endl << std::endl;
+    SetConsoleTextAttribute(hConsole, 7);
 
     ///L'enjeu (la carte de l'adversaire à gagner en cas de victoire) est choisie aléatoirement pour les 2 joueurs
     choixCarteEnjeu(joueur1);
@@ -1784,8 +1833,9 @@ void jouer(Joueur* joueur1, Joueur* joueur2)
         ///tourDeJeu(Joueur2); le joueur 1 est le joueurCible
         tourDeJeu(joueur2, joueur1);
         std::cout <<std::endl;
+        SetConsoleTextAttribute(hConsole, 2);
         std::cout <<"----------------------------------------TOUR SUIVANT-----------------------------------------------" << std::endl;
-
+        SetConsoleTextAttribute(hConsole, 7);
     }
 
     ///Afficher le gagnant, et gérer la carte enjeu du perdant
@@ -2241,31 +2291,49 @@ void jouerCarteSpeciale(Joueur* joueur, Joueur* joueurCible, Carte* cartePiochee
         joueur->setCreatureActive(NULL);
         //crea_active ennemie prend 10 degats
         joueurCible->getCreatureActive()->recevoirDegats(new Attaque("kamikaze", "la cible perd 10 points de degats", 10, 0, "Aucun"), joueur->getCreatureActive());
+        SetConsoleTextAttribute(hConsole, 4);
+        std::cout<<joueur->getCreatureActive()->getNom()<<" se suicide ! Son ennemi "<< joueurCible->getCreatureActive()->getNom() << "perd 10 points de vie"<<endl;
+        SetConsoleTextAttribute(hConsole, 7);//Puis on le remet en blanc
     }
     else if(cartePiochee->getNom() == "BoostVie")
     {
         //vie crea + 5
         joueur->getCreatureActive()->setVie(joueur->getCreatureActive()->getVie() + 5);
+        SetConsoleTextAttribute(hConsole, 2);//Le texte passe en vert
+        std::cout<<joueur->getCreatureActive()->getNom()<<" gagne 5 points de vie ! Sa vie actuelle est de "<<joueur->getCreatureActive()->getVie()<<" PV."<<endl;
+        SetConsoleTextAttribute(hConsole, 7);//Puis on le remet en blanc
     }
     else if(cartePiochee->getNom() == "BoostDef")
     {
         //def crea + 2
         joueur->getCreatureActive()->setDefense(joueur->getCreatureActive()->getDefense() + 2);
+        SetConsoleTextAttribute(hConsole, 3);
+        std::cout<<joueur->getCreatureActive()->getNom()<<" gagne 2 points de defense ! Sa defense actuelle est de "<<joueur->getCreatureActive()->getDefense()<<endl;
+        SetConsoleTextAttribute(hConsole, 7);
     }
     else if(cartePiochee->getNom() == "BoostAttaque")
     {
         //atck crea + 2
         joueur->getCreatureActive()->setIsAttackBoosted(true);
+        SetConsoleTextAttribute(hConsole, 5);
+        std::cout<<joueur->getCreatureActive()->getNom()<<" gagne 2 points d attaque permanants !"<<endl;
+        SetConsoleTextAttribute(hConsole, 7);
     }
     else if(cartePiochee->getNom() == "Attaquex2")
     {
         //atck crea x 2
         joueur->getCreatureActive()->setIsAttackDoubled(true);
+        SetConsoleTextAttribute(hConsole, 12);
+        std::cout<<joueur->getCreatureActive()->getNom()<<" DOUBLE les degats de sa prochaine attaque !"<<endl;
+        SetConsoleTextAttribute(hConsole, 7);
     }
     else if(cartePiochee->getNom() == "Renvoi")
     {
         //renvoi
         joueur->getCreatureActive()->setIsRenvoiActive(true);
+        SetConsoleTextAttribute(hConsole, 6);
+        std::cout<<joueur->getCreatureActive()->getNom()<<" est pret a renvoyer la prochaine attaque !"<<endl;
+        SetConsoleTextAttribute(hConsole, 7);
     }
 }
 

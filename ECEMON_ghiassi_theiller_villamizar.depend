@@ -100,9 +100,10 @@
 	"Collection.h"
 	"Creature.h"
 
-1606341099 source:c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\main.cpp
+1607035437 source:c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\main.cpp
 	<iostream>
 	"fonctions.h"
+	<windows.h>
 
 1604525312 source:c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\partie.cpp
 
@@ -139,13 +140,13 @@
 
 1606328103 c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\defense.h
 
-1607031034 source:c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\fonctions.cpp
+1607035401 source:c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\fonctions.cpp
 	"fonctions.h"
 	<algorithm>
 	<ctime>
 	<cstdlib>
 
-1607028030 c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\fonctions.h
+1607034736 c:\users\laurent\documents\ing_2\informatique\ecemon_ghiassi_theiller_villamizar\fonctions.h
 	<iostream>
 	"Carte.h"
 	"Joueur.h"
@@ -157,4 +158,5 @@
 	"Attaque.h"
 	"Defense.h"
 	<fstream>
+	<windows.h>
 

@@ -12,6 +12,7 @@
 #include "Attaque.h"
 #include "Defense.h"
 #include <fstream>
+#include <windows.h> // pour colorer le texte de la console
 
 void menu();
 
