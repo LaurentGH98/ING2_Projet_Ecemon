@@ -29,6 +29,13 @@ bool isChoiceOk(int choix, Joueur* joueur); //Vérifie si le choix des cartes lor
                                             //En d'autres termes vérifie si la carte choisie par l'utilisateur
                                             //est présente dans sa collection
 
+bool isPresentDansLaCollec(Carte* carteChoisie, Joueur* joueur); //vérifie si la carte choisie pour la création du deck
+                                                                 //est présente dans la collec
+
+//vérifie si on peut ajouter la carte au deck, prend en compte isPresnetDansLaCollec
+bool isAjoutableAuDeck(int nbCreaDansDeck, int nbEnergieDansDeck, int nbSpecialeDansDeck, Carte* carteChoisie, Joueur* joueur);
+
+
 void lancerPartie(Joueur* joueur); //simplement la création des collections et decks des 2 joueurs
 
 void choixCarteEnjeu(Joueur* joueur);//choisit aléatoirement la carte enjeu dans la collection du joueur

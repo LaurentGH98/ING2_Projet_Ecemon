@@ -177,19 +177,8 @@ void Creature::attaquer(Carte* creatureCible, Attaque* attaqueChoisie)
 
 void Creature::recevoirDegats(Attaque* attaque, Carte* creatureAttaquante)
 {
-    ///Si le boost attaque +2 est actif
-    if(creatureAttaquante->getIsAttackBoosted())
-    {
-        if(this->getDefense() >= (attaque->getPointsDeDegats() + 2)){
-            std::cout<<this->getNom()<<" se defend completement de l attaque. Aucun degat recu."<<std::endl;
-        }
-        else{
-            std::cout<<this->getNom()<<" a une defense de "<<this->getDefense()<<", la creature perd donc : "<<attaque->getPointsDeDegats()-this->getDefense()+2<<" point(s) de vie." << std::endl;
-            this->setVie(this->getVie() + this->getDefense() - attaque->getPointsDeDegats() - 2);
-        }
-    }
     ///Si l'attaque doublée est activée
-    else if(creatureAttaquante->getIsAttackDoubled())
+    if(creatureAttaquante->getIsAttackDoubled())
     {
         if(this->getDefense() >= (attaque->getPointsDeDegats()*2)){
             std::cout<<this->getNom()<<" se defend completement de l attaque. Aucun degat recu."<<std::endl;
@@ -197,6 +186,17 @@ void Creature::recevoirDegats(Attaque* attaque, Carte* creatureAttaquante)
         else{
             std::cout<<this->getNom()<<" a une defense de "<<this->getDefense()<<", la creature perd donc : "<<attaque->getPointsDeDegats()*2-this->getDefense()<<" point(s) de vie." << std::endl;
             this->setVie(this->getVie() + this->getDefense() - attaque->getPointsDeDegats()*2);
+        }
+    }
+    ///Si le boost attaque +2 est actif
+    else if(creatureAttaquante->getIsAttackBoosted())
+    {
+        if(this->getDefense() >= (attaque->getPointsDeDegats() + 2)){
+            std::cout<<this->getNom()<<" se defend completement de l attaque. Aucun degat recu."<<std::endl;
+        }
+        else{
+            std::cout<<this->getNom()<<" a une defense de "<<this->getDefense()<<", la creature perd donc : "<<attaque->getPointsDeDegats()-this->getDefense()+2<<" point(s) de vie." << std::endl;
+            this->setVie(this->getVie() + this->getDefense() - attaque->getPointsDeDegats() - 2);
         }
     }
     ///Si le renvoi est activé

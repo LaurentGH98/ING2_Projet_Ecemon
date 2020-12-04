@@ -377,7 +377,11 @@ void creerJoueur()
     }
     std::cout << std::endl;
 }
-///----------------Blindage du choix des cartes lors de la création du deck, par une fonction qui retourne un booléen----------------
+
+///-------------------------------Blindage du choix des cartes lors de la création de la collection---------------------------------
+
+
+///--------------Blindage du choix des cartes lors de la création du deck (dit si la carte choisie est bien dans la collec)----------
 bool isChoiceOk(int choix, Joueur* joueur)
 {
     bool isPresent = false;
@@ -555,6 +559,49 @@ bool isChoiceOk(int choix, Joueur* joueur)
     return isPresent;
 }
 
+///------Blindage du choix des cartes lors de la création du deck (si la carte est dans la collec ET < nb exemplaires max)------
+bool isPresentDansLaCollec(Carte* carteChoisie, Joueur* joueur)
+{
+    for (auto &elem : joueur->getClasseCollec()->GetCollection())
+    {//On parcourt la collection du joueur...
+        if (elem->getNom()==carteChoisie->getNom()) //si on a bien la carteChoisie dans la collec...
+        {
+            return true; //on return true
+        }
+    }
+    return false; //false sinon
+}
+
+//return true si la carte choisie peut être ajoutée au deck (prend en compte la fonction isPresent qui retourne un bool)
+//pour rappel on veut 3 Creatures 10 Energies et 3 Speciales
+bool isAjoutableAuDeck(int nbCreaDansDeck, int nbEnergieDansDeck, int nbSpecialeDansDeck, Carte* carteChoisie, Joueur* joueur)
+{
+    //si la carte est dans la collec
+    if (isPresentDansLaCollec(carteChoisie, joueur))
+    {
+        //si c'est une créature
+        if(carteChoisie->getType()=="Creature" && nbCreaDansDeck<3)
+        {
+            return true;
+        }
+        //si c'est une énergie
+        else if (carteChoisie->getType()=="Energie" && nbEnergieDansDeck<10)
+        {
+            return true;
+        }
+        //si c'est une spéciale
+        else if (carteChoisie->getType()=="Speciale" && nbSpecialeDansDeck<3)
+        {
+            return true;
+        }
+        else
+            return false;
+    }
+    else
+        return false;
+}
+
+
 ///-----------------------------------------------LANCER PARTIE----------------------------------------------------------------------
 void lancerPartie(Joueur* joueur)
 {
@@ -685,7 +732,7 @@ void lancerPartie(Joueur* joueur)
 
     ///2)le joueur ajoute des cartes, une par une, à son deck depuis sa collection
     std::cout << std::endl;
-    std::cout << "A partir de cette collection, former un deck de";
+    std::cout << "A partir de cette collection, former un deck de ";
     SetConsoleTextAttribute(hConsole, 12);
     std::cout << "16 cartes : 3 Creatures, 10 Energies, 3 Speciales" << std::endl;
     SetConsoleTextAttribute(hConsole, 7);
@@ -1547,28 +1594,66 @@ void tourDeJeu(Joueur* joueur, Joueur* joueurCible) //joueur cible est utile lor
             {//on joue la carte...
                 if(joueur->getSpecialeActive()!=NULL)//si il y a déjà une carte spéciale active...
                 {
-                    //on remplace la carte spéciale active, qui part au cimetiere...
-                    joueur->ajouterAuCimetiere(joueur->getSpecialeActive());
+                    if(joueur->getSpecialeActive()->getIsRecyclable()==true) //si la carte est recyclable
+                    {
+                        //on met l'ancienne spéciale active au fond du deck
+                        joueur->getClasseCollec()->GetDeck().push_back(joueur->getSpecialeActive());
+                        std::cout << joueur->getSpecialeActive()->getNom() << " etant ";
+                        SetConsoleTextAttribute(hConsole, 2);
+                        std::cout << "recyclable";
+                        SetConsoleTextAttribute(hConsole, 7);
+                        std::cout << ", elle retourne au fond du deck!" << std::endl;
+                    }
+
+                    else //sinon
+                    {
+                        //l'ancienne spéciale active part au cimetiere...
+                        joueur->ajouterAuCimetiere(joueur->getSpecialeActive());
+                        std::cout << joueur->getSpecialeActive()->getNom() << " n etant ";
+                        SetConsoleTextAttribute(hConsole, 12);
+                        std::cout << "pas recyclable";
+                        SetConsoleTextAttribute(hConsole, 7);
+                        std::cout << ", elle part au cimetiere.." << std::endl;
+                    }
 
                     //et la nouvelle devient la spéciale active
                     joueur->setSpecialeActive(cartePiochee);
 
-                    //son effet s'active instant'
+                    //son effet s'active instantanement
                     jouerCarteSpeciale(joueur, joueurCible, cartePiochee);
                 }
 
                 else //si pas de spéciale active...
                 {
-                    //la carte piochée devient directement la spéciale active
+                    //la carte piochée devient directement la spéciale active, et on la joue directement
                     joueur->setSpecialeActive(cartePiochee);
                     jouerCarteSpeciale(joueur, joueurCible, cartePiochee);
                 }
 
             }
-            else
+            else //si choix==2 on ne joue pas la carte
             {
-                //la carte piochée part au cimetière et la carte déjà active le reste
-                joueur->ajouterAuCimetiere(cartePiochee);
+                if(cartePiochee->getIsRecyclable()==true)//si la carte piochée est recyclable...
+                {
+                    //On la remet au fond du deck
+                    joueur->getClasseCollec()->GetDeck().push_back(cartePiochee);
+                    std::cout << cartePiochee->getNom() << " etant ";
+                    SetConsoleTextAttribute(hConsole, 2);
+                    std::cout << "recyclable";
+                    SetConsoleTextAttribute(hConsole, 7);
+                    std::cout << ", elle retourne au fond du deck!" << std::endl;
+                }
+                else //si la carte n'est pas recyclable...
+                {
+                    //La carte piochée part au cimetière et la carte déjà active le reste
+                    joueur->ajouterAuCimetiere(cartePiochee);
+                    std::cout << cartePiochee->getNom() << " n etant ";
+                    SetConsoleTextAttribute(hConsole, 12);
+                    std::cout << "pas recyclable";
+                    SetConsoleTextAttribute(hConsole, 7);
+                    std::cout << ", elle part au cimetiere.." << std::endl;
+                }
+
             }
         }
     }
@@ -1742,7 +1827,8 @@ void tourDeJeu(Joueur* joueur, Joueur* joueurCible) //joueur cible est utile lor
 
                             //et le choix2 passe à 3 pour aller dans le 3e cas, pour ensuite defendre
                             std::cout << "Vous etes contraint de defendre" << std::endl;
-                            choix2=3;
+                            //choix2=3;
+                            joueur->getCreatureActive()->seDefendre(joueur->getCreatureActive()->getDefense1());
                         }
 
                     }
