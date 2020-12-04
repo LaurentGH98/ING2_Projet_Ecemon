@@ -1,0 +1,103 @@
+# depslib dependency file v1.0
+1607112483 source:c:\users\laurent\desktop\sauvegarde_github_04_12_2020\attaque.cpp
+	<iostream>
+	"Attaque.h"
+
+1607112483 c:\users\laurent\desktop\sauvegarde_github_04_12_2020\attaque.h
+
+1607112483 source:c:\users\laurent\desktop\sauvegarde_github_04_12_2020\boutique.cpp
+	<iostream>
+	"Boutique.h"
+
+1607112483 c:\users\laurent\desktop\sauvegarde_github_04_12_2020\boutique.h
+	<vector>
+	<iostream>
+	"Carte.h"
+	"Joueur.h"
+
+1607112483 c:\users\laurent\desktop\sauvegarde_github_04_12_2020\carte.h
+	"Attaque.h"
+	"Defense.h"
+
+1607112483 c:\users\laurent\desktop\sauvegarde_github_04_12_2020\defense.h
+
+1607112483 c:\users\laurent\desktop\sauvegarde_github_04_12_2020\joueur.h
+	"Collection.h"
+	"Creature.h"
+
+1607119655 c:\users\laurent\desktop\sauvegarde_github_04_12_2020\collection.h
+	"Carte.h"
+	<vector>
+
+1607112483 c:\users\laurent\desktop\sauvegarde_github_04_12_2020\creature.h
+	"Carte.h"
+	"Attaque.h"
+	"Defense.h"
+
+1607112483 source:c:\users\laurent\desktop\sauvegarde_github_04_12_2020\carte.cpp
+	<iostream>
+	"Carte.h"
+
+1607121060 source:c:\users\laurent\desktop\sauvegarde_github_04_12_2020\collection.cpp
+	<iostream>
+	"Collection.h"
+	"Creature.h"
+	"Energie.h"
+	"Speciale.h"
+	<algorithm>
+	<ctime>
+	<cstdlib>
+
+1607112483 c:\users\laurent\desktop\sauvegarde_github_04_12_2020\energie.h
+	"Carte.h"
+
+1607112483 c:\users\laurent\desktop\sauvegarde_github_04_12_2020\speciale.h
+	"Carte.h"
+
+1607112483 source:c:\users\laurent\desktop\sauvegarde_github_04_12_2020\creature.cpp
+	<iostream>
+	"Creature.h"
+
+1607112483 source:c:\users\laurent\desktop\sauvegarde_github_04_12_2020\defense.cpp
+	<iostream>
+	"Defense.h"
+
+1607112483 source:c:\users\laurent\desktop\sauvegarde_github_04_12_2020\energie.cpp
+	<iostream>
+	"Energie.h"
+
+1607120995 source:c:\users\laurent\desktop\sauvegarde_github_04_12_2020\fonctions.cpp
+	"fonctions.h"
+	<algorithm>
+	<ctime>
+	<cstdlib>
+
+1607119005 c:\users\laurent\desktop\sauvegarde_github_04_12_2020\fonctions.h
+	<iostream>
+	"Carte.h"
+	"Joueur.h"
+	"Collection.h"
+	"Boutique.h"
+	"Creature.h"
+	"Energie.h"
+	"Speciale.h"
+	"Attaque.h"
+	"Defense.h"
+	<fstream>
+	<windows.h>
+
+1607112483 source:c:\users\laurent\desktop\sauvegarde_github_04_12_2020\joueur.cpp
+	<iostream>
+	"Joueur.h"
+	<vector>
+	<sstream>
+
+1607112483 source:c:\users\laurent\desktop\sauvegarde_github_04_12_2020\main.cpp
+	<iostream>
+	"fonctions.h"
+	<windows.h>
+
+1607112483 source:c:\users\laurent\desktop\sauvegarde_github_04_12_2020\speciale.cpp
+	<iostream>
+	"Speciale.h"
+

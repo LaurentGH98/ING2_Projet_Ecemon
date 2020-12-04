@@ -35,6 +35,7 @@ bool isPresentDansLaCollec(Carte* carteChoisie, Joueur* joueur); //vérifie si la
 //vérifie si on peut ajouter la carte au deck, prend en compte isPresnetDansLaCollec
 bool isAjoutableAuDeck(int nbCreaDansDeck, int nbEnergieDansDeck, int nbSpecialeDansDeck, Carte* carteChoisie, Joueur* joueur);
 
+int affilierCurrentCarte2(Carte** currentCarte2, std::string nomDeLaCarte, int i);
 
 void lancerPartie(Joueur* joueur); //simplement la création des collections et decks des 2 joueurs
 

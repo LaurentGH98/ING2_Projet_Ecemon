@@ -148,6 +148,13 @@ void Collection::afficherCollec()
     std::cout << std::endl;
 }
 
+void Collection::effacerElementCollection(int i){
+    m_collection.erase(m_collection.begin() + i);
+}
+
+void Collection::clearCollection(){
+    m_collection.clear();
+}
 
 //Deck
 

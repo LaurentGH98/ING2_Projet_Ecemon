@@ -569,6 +569,7 @@ bool isPresentDansLaCollec(Carte* carteChoisie, Joueur* joueur)
             return true; //on return true
         }
     }
+    std::cout<<"La carte n est pas dans la collection."<<std::endl;
     return false; //false sinon
 }
 
@@ -601,13 +602,45 @@ bool isAjoutableAuDeck(int nbCreaDansDeck, int nbEnergieDansDeck, int nbSpeciale
         return false;
 }
 
+///affilie une carte à CurrentCarte2 en fonction du nombre entré par l'utilisateur
+int affilierCurrentCarte2(Carte** currentCarte2, std::string nomDeLaCarte, int i)
+{
+    if(nomDeLaCarte == "Melenchon")             {*currentCarte2 = new Melenchon();}
+    else if(nomDeLaCarte == "Marchais")         {*currentCarte2 = new Marchais();}
+    else if(nomDeLaCarte == "Hamon")            {*currentCarte2 = new Hamon();}
+    else if(nomDeLaCarte == "Hollande")         {*currentCarte2 = new Hollande();}
+    else if(nomDeLaCarte == "Macron")           {*currentCarte2 = new Macron();}
+    else if(nomDeLaCarte == "Lassalle")         {*currentCarte2 = new Lassalle();}
+    else if(nomDeLaCarte == "Fillon")           {*currentCarte2 = new Fillon();}
+    else if(nomDeLaCarte == "Sarkozy")          {*currentCarte2 = new Sarkozy();}
+    else if(nomDeLaCarte == "JMLepen")          {*currentCarte2 = new JMLepen();}
+    else if(nomDeLaCarte == "MLepen")           {*currentCarte2 = new MLepen();}
+    else if(nomDeLaCarte == "ExtremeGauche")    {*currentCarte2 = new ExtremeGauche();}
+    else if(nomDeLaCarte == "Gauche")           {*currentCarte2 = new Gauche();}
+    else if(nomDeLaCarte == "Centre")           {*currentCarte2 = new Centre();}
+    else if(nomDeLaCarte == "Droite")           {*currentCarte2 = new Droite();}
+    else if(nomDeLaCarte == "ExtremeDroite")    {*currentCarte2 = new ExtremeDroite();}
+    else if(nomDeLaCarte == "Kamikaze")         {*currentCarte2 = new Kamikaze();}
+    else if(nomDeLaCarte == "BoostVie")         {*currentCarte2 = new BoostVie();}
+    else if(nomDeLaCarte == "BoostDef")         {*currentCarte2 = new BoostDef();}
+    else if(nomDeLaCarte == "BoostAttaque")     {*currentCarte2 = new BoostAttaque();}
+    else if(nomDeLaCarte == "Attaquex2")        {*currentCarte2 = new Attaquex2();}
+    else if(nomDeLaCarte == "Renvoi")           {*currentCarte2 = new Renvoi();}
+    else {
+        std::cout << "Cette carte n est pas dans votre collection, veuillez en saisir une autre" << std::endl;
+        i--; //permet de ne pas prendre en compte le tour de boucle en cours
+    }
+    return i;
+}
 
 ///-----------------------------------------------LANCER PARTIE----------------------------------------------------------------------
 void lancerPartie(Joueur* joueur)
 {
     /// ICI LES JOUEURS NE SONT PAS INITIALISES
 
-
+    int nbCreaDansDeck      = 0;//3 max
+    int nbEnergieDansDeck   = 0;//10 max
+    int nbSpecialeDansDeck  = 0;//3 max
     ///LES ETAPES SUIVANTES DOIVENT ETRE FAITES POUR LES 2 JOUEURS
     Carte* currentCarte; //va servir à créer les cartes de la collection en fonctions du nom lu dans le fichier
     Carte* currentCarte2; //même principe, mais pour le deck
@@ -736,7 +769,7 @@ void lancerPartie(Joueur* joueur)
     SetConsoleTextAttribute(hConsole, 12);
     std::cout << "16 cartes : 3 Creatures, 10 Energies, 3 Speciales" << std::endl;
     SetConsoleTextAttribute(hConsole, 7);
-    std::cout << "Saisissez les numeros des cartes que vous voulez, pour creer votre deck" << std::endl;
+    std::cout << "Saisissez les numeros des cartes que vous voulez, pour creer votre deck. Pas de doublons (hors energie) !" << std::endl;
     int choix;
 
     for (int i=0; i<16; ++i)
@@ -745,256 +778,67 @@ void lancerPartie(Joueur* joueur)
         switch (choix)
         {
         case 1 :
-            if(isChoiceOk(choix,joueur)) //permet de vérifier si la carte choisie par l'utilisateur est présente dans son deck
-            {
-                currentCarte2 = new Melenchon();
-                joueur->getClasseCollec()->AjouterCarteDeck(currentCarte2);
-            }
-            else
-            {
-                std::cout << "Cette carte n est pas dans votre collection, veuillez en saisir une autre" << std::endl;
-                i--; //permet de ne pas prendre en compte le tour de boucle en cours
-            }
+            affilierCurrentCarte2(&currentCarte2, "Melenchon", i);
             break;
         case 2 :
-            if(isChoiceOk(choix,joueur))
-            {
-                currentCarte2 = new Marchais();
-                joueur->getClasseCollec()->AjouterCarteDeck(currentCarte2);
-            }
-            else
-            {
-                std::cout << "Cette carte n est pas dans votre collection, veuillez en saisir une autre" << std::endl;
-                i--;
-            }
+            affilierCurrentCarte2(&currentCarte2, "Marchais", i);
             break;
         case 3 :
-            if(isChoiceOk(choix,joueur))
-            {
-                currentCarte2 = new Hamon();
-                joueur->getClasseCollec()->AjouterCarteDeck(currentCarte2);
-            }
-            else
-            {
-                std::cout << "Cette carte n est pas dans votre collection, veuillez en saisir une autre" << std::endl;
-                i--;
-            }
+            affilierCurrentCarte2(&currentCarte2, "Hamon", i);
             break;
         case 4 :
-            if(isChoiceOk(choix,joueur))
-            {
-                currentCarte2 = new Hollande();
-                joueur->getClasseCollec()->AjouterCarteDeck(currentCarte2);
-            }
-            else
-            {
-                std::cout << "Cette carte n est pas dans votre collection, veuillez en saisir une autre" << std::endl;
-                i--;
-            }
+            affilierCurrentCarte2(&currentCarte2, "Hollande", i);
             break;
         case 5 :
-            if(isChoiceOk(choix,joueur))
-            {
-                currentCarte2 = new Macron();
-                joueur->getClasseCollec()->AjouterCarteDeck(currentCarte2);
-            }
-            else
-            {
-                std::cout << "Cette carte n est pas dans votre collection, veuillez en saisir une autre" << std::endl;
-                i--;
-            }
+            affilierCurrentCarte2(&currentCarte2, "Macron", i);
             break;
         case 6 :
-            if(isChoiceOk(choix,joueur))
-            {
-                currentCarte2 = new Lassalle();
-                joueur->getClasseCollec()->AjouterCarteDeck(currentCarte2);
-            }
-            else
-            {
-                std::cout << "Cette carte n est pas dans votre collection, veuillez en saisir une autre" << std::endl;
-                i--;
-            }
+            affilierCurrentCarte2(&currentCarte2, "Lassalle", i);
             break;
         case 7 :
-            if(isChoiceOk(choix,joueur))
-            {
-                currentCarte2 = new Fillon();
-                joueur->getClasseCollec()->AjouterCarteDeck(currentCarte2);
-            }
-            else
-            {
-                std::cout << "Cette carte n est pas dans votre collection, veuillez en saisir une autre" << std::endl;
-                i--;
-            }
+            affilierCurrentCarte2(&currentCarte2, "Fillon", i);
             break;
         case 8 :
-            if(isChoiceOk(choix,joueur))
-            {
-                currentCarte2 = new Sarkozy();
-                joueur->getClasseCollec()->AjouterCarteDeck(currentCarte2);
-            }
-            else
-            {
-                std::cout << "Cette carte n est pas dans votre collection, veuillez en saisir une autre" << std::endl;
-                i--;
-            }
+            affilierCurrentCarte2(&currentCarte2, "Sarkozy", i);
             break;
         case 9 :
-            if(isChoiceOk(choix,joueur))
-            {
-                currentCarte2 = new JMLepen();
-                joueur->getClasseCollec()->AjouterCarteDeck(currentCarte2);
-            }
-            else
-            {
-                std::cout << "Cette carte n est pas dans votre collection, veuillez en saisir une autre" << std::endl;
-                i--;
-            }
+            affilierCurrentCarte2(&currentCarte2, "JMLepen", i);
             break;
         case 10 :
-            if(isChoiceOk(choix,joueur))
-            {
-                currentCarte2 = new MLepen();
-                joueur->getClasseCollec()->AjouterCarteDeck(currentCarte2);
-            }
-            else
-            {
-                std::cout << "Cette carte n est pas dans votre collection, veuillez en saisir une autre" << std::endl;
-                i--;
-            }
+            affilierCurrentCarte2(&currentCarte2, "MLepen", i);
             break;
         case 11 :
-            if(isChoiceOk(choix,joueur))
-            {
-                currentCarte2 = new ExtremeGauche();
-                joueur->getClasseCollec()->AjouterCarteDeck(currentCarte2);
-            }
-            else
-            {
-                std::cout << "Cette carte n est pas dans votre collection, veuillez en saisir une autre" << std::endl;
-                i--;
-            }
+            affilierCurrentCarte2(&currentCarte2, "ExtremeGauche", i);
             break;
         case 12 :
-            if(isChoiceOk(choix,joueur))
-            {
-                currentCarte2 = new Gauche();
-                joueur->getClasseCollec()->AjouterCarteDeck(currentCarte2);
-            }
-            else
-            {
-                std::cout << "Cette carte n est pas dans votre collection, veuillez en saisir une autre" << std::endl;
-                i--;
-            }
+            affilierCurrentCarte2(&currentCarte2, "Gauche", i);
             break;
         case 13 :
-            if(isChoiceOk(choix,joueur))
-            {
-                currentCarte2 = new Centre();
-                joueur->getClasseCollec()->AjouterCarteDeck(currentCarte2);
-            }
-            else
-            {
-                std::cout << "Cette carte n est pas dans votre collection, veuillez en saisir une autre" << std::endl;
-                i--;
-            }
+            affilierCurrentCarte2(&currentCarte2, "Centre", i);
             break;
         case 14 :
-            if(isChoiceOk(choix,joueur))
-            {
-                currentCarte2 = new Droite();
-                joueur->getClasseCollec()->AjouterCarteDeck(currentCarte2);
-            }
-            else
-            {
-                std::cout << "Cette carte n est pas dans votre collection, veuillez en saisir une autre" << std::endl;
-                i--;
-            }
+            affilierCurrentCarte2(&currentCarte2, "Droite", i);
             break;
         case 15 :
-            if(isChoiceOk(choix,joueur))
-            {
-                currentCarte2 = new ExtremeDroite();
-                joueur->getClasseCollec()->AjouterCarteDeck(currentCarte2);
-            }
-            else
-            {
-                std::cout << "Cette carte n est pas dans votre collection, veuillez en saisir une autre" << std::endl;
-                i--;
-            }
+            affilierCurrentCarte2(&currentCarte2, "ExtremeDroite", i);
             break;
         case 16 :
-            if(isChoiceOk(choix,joueur))
-            {
-                currentCarte2 = new Kamikaze();
-                joueur->getClasseCollec()->AjouterCarteDeck(currentCarte2);
-            }
-            else
-            {
-                std::cout << "Cette carte n est pas dans votre collection, veuillez en saisir une autre" << std::endl;
-                i--;
-            }
+            affilierCurrentCarte2(&currentCarte2, "Kamikaze", i);
             break;
         case 17 :
-            if(isChoiceOk(choix,joueur))
-            {
-                currentCarte2 = new BoostVie() ;
-                joueur->getClasseCollec()->AjouterCarteDeck(currentCarte2);
-            }
-            else
-            {
-                std::cout << "Cette carte n est pas dans votre collection, veuillez en saisir une autre" << std::endl;
-                i--;
-            }
+            affilierCurrentCarte2(&currentCarte2, "BoostVie", i);
             break;
         case 18 :
-            if(isChoiceOk(choix,joueur))
-            {
-                currentCarte2 = new BoostDef();
-                joueur->getClasseCollec()->AjouterCarteDeck(currentCarte2);
-            }
-            else
-            {
-                std::cout << "Cette carte n est pas dans votre collection, veuillez en saisir une autre" << std::endl;
-                i--;
-            }
+            affilierCurrentCarte2(&currentCarte2, "BoostDef", i);
             break;
         case 19 :
-            if(isChoiceOk(choix,joueur))
-            {
-                currentCarte2 = new BoostAttaque();
-                joueur->getClasseCollec()->AjouterCarteDeck(currentCarte2);
-            }
-            else
-            {
-                std::cout << "Cette carte n est pas dans votre collection, veuillez en saisir une autre" << std::endl;
-                i--;
-            }
+            affilierCurrentCarte2(&currentCarte2, "BoostAttaque", i);
             break;
         case 20 :
-            if(isChoiceOk(choix,joueur))
-            {
-                currentCarte2 = new Attaquex2() ;
-                joueur->getClasseCollec()->AjouterCarteDeck(currentCarte2);
-            }
-            else
-            {
-                std::cout << "Cette carte n est pas dans votre collection, veuillez en saisir une autre" << std::endl;
-                i--;
-            }
+            affilierCurrentCarte2(&currentCarte2, "Attaquex2", i);
             break;
         case 21 :
-            if(isChoiceOk(choix,joueur))
-            {
-                currentCarte2 = new Renvoi();
-                joueur->getClasseCollec()->AjouterCarteDeck(currentCarte2);
-            }
-            else
-            {
-                std::cout << "Cette carte n est pas dans votre collection, veuillez en saisir une autre" << std::endl;
-                i--;
-            }
+            affilierCurrentCarte2(&currentCarte2, "Renvoi", i);
             break;
         default :
             std::cout << "Veuillez rentrer un nombre valide" << std::endl;
@@ -1002,8 +846,154 @@ void lancerPartie(Joueur* joueur)
             break;
 
         }
+        if(isAjoutableAuDeck(nbCreaDansDeck, nbEnergieDansDeck, nbSpecialeDansDeck, currentCarte2, joueur))
+        {
+            //on ajoute la carte
+            joueur->getClasseCollec()->AjouterCarteDeck(currentCarte2);
+            //Ensuite on supprime toutes les cates similaires dans la collection pour éviter les doublons
+            if(currentCarte2->getType() != "Energie")
+            {
+                for(int i = 0; i<joueur->getClasseCollec()->GetCollection().size(); i++)
+                {
+                    if(joueur->getClasseCollec()->GetCollection()[i]->getNom() == currentCarte2->getNom())
+                    {
+                        //on supprime un élément du vecteur collection avec son indice
+                        joueur->getClasseCollec()->effacerElementCollection(i);
+                    }
+                }
+            }
+            else if(currentCarte2->getType() == "Energie")
+            {
+                bool isSuppr = false;
+                for(int i = 0; i<joueur->getClasseCollec()->GetCollection().size(); i++)
+                {
+                    if(isSuppr == false)
+                    {
+                        if(joueur->getClasseCollec()->GetCollection()[i]->getNom() == currentCarte2->getNom())
+                        {
+                            //on supprime un élément du vecteur collection avec son indice
+                            joueur->getClasseCollec()->effacerElementCollection(i);
+                            isSuppr = true;
+                        }
+                    }
+                }
+            }
+            //puis maj des var
+            if(currentCarte2->getType() == "Creature") nbCreaDansDeck++;
+            else if(currentCarte2->getType() == "Energie") nbEnergieDansDeck++;
+            else if(currentCarte2->getType() == "Speciale") nbSpecialeDansDeck++;
+        }
+        else {
+            std::cout<<"Impossible d ajouter la carte au deck : reessayez."<<std::endl;
+            i--;
+        }
+        if(currentCarte2 == NULL) std::cout<<"Erreur : currentCarte2 n est pas initialisee."<<std::endl;
     }
     joueur->getClasseCollec()->afficherDeck();
+
+    ///On re-remplit la collection à la partir du fichier car on l'a vidée
+    ///On commence par la clear pour etre tranquille
+    joueur->getClasseCollec()->clearCollection();
+    ///Puis on la re-remplit
+        std::ifstream Flux((nomJoueur+".txt").c_str());//ouverture du fichier en lecture
+        if(Flux)
+        {
+            std::string ligne; //ligne nous permettant de lire le fichier ligne par ligne
+            while (getline(Flux, ligne)) //Tant qu'on n'est pas à la fin, on lit une ligne complète
+            {
+                if (ligne=="Melenchon")
+                {
+                    currentCarte = new Melenchon();
+                }
+                else if (ligne=="Marchais")
+                {
+                    currentCarte = new Marchais();
+                }
+                else if (ligne=="Hamon")
+                {
+                    currentCarte = new Hamon();
+                }
+                else if (ligne=="Hollande")
+                {
+                    currentCarte = new Hollande();
+                }
+                else if (ligne=="Macron")
+                {
+                    currentCarte = new Macron();
+                }
+                else if (ligne=="Lassalle")
+                {
+                    currentCarte = new Lassalle();
+                }
+                else if (ligne=="Fillon")
+                {
+                    currentCarte = new Fillon();
+                }
+                else if (ligne=="Sarkozy")
+                {
+                    currentCarte = new Sarkozy();
+                }
+                else if (ligne=="JMLepen")
+                {
+                    currentCarte = new JMLepen();
+                }
+                else if (ligne=="MLepen")
+                {
+                    currentCarte = new MLepen();
+                }
+                else if (ligne=="Extreme Gauche")
+                {
+                    currentCarte = new ExtremeGauche();
+                }
+                else if (ligne=="Gauche")
+                {
+                    currentCarte = new Gauche();
+                }
+                else if (ligne=="Centre")
+                {
+                    currentCarte = new Centre();
+                }
+                else if (ligne=="Droite")
+                {
+                    currentCarte = new Droite();
+                }
+                else if (ligne=="Extreme Droite")
+                {
+                    currentCarte = new ExtremeDroite();
+                }
+                else if (ligne=="Kamikaze")
+                {
+                    currentCarte = new Kamikaze();
+                }
+                else if (ligne=="BoostVie")
+                {
+                    currentCarte = new BoostVie();
+                }
+                else if (ligne=="BoostDef")
+                {
+                    currentCarte = new BoostDef();
+                }
+                else if (ligne=="BoostAttaque")
+                {
+                    currentCarte = new BoostAttaque();
+                }
+                else if (ligne=="Attaquex2")
+                {
+                    currentCarte = new Attaquex2();
+                }
+                else if (ligne=="Renvoi")
+                {
+                    currentCarte = new Renvoi();
+                }
+                //IMPORTANT : Une fois que la currentCarte est initialisée sur la bonne carte, on ajoute la carte à la collection
+                joueur->getClasseCollec()->AjouterCarteCollec(currentCarte);
+            }//fin while get line
+            conditionArret=1;
+        }//fin if flux
+        else
+        {
+            std::cout << "ERREUR: Impossible d'ouvrir le fichier. Le joueur " << nomJoueur << " n'existe pas." <<  std::endl;
+        }
 }
 
 

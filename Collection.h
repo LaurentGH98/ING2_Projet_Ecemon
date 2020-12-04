@@ -28,6 +28,8 @@ public :
     void AjouterCarteCollec (Carte* nouvCarte);
     void RetirerCarteCollec (Carte* carteR);
     void afficherCollec();
+    void effacerElementCollection(int i);
+    void clearCollection();
 
     void AjouterCarteDeck (Carte* nouvCarte);
     void RetirerCarteDeck (Carte* carteR);
