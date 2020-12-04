@@ -18,6 +18,8 @@ void menu();
 
 void afficherBoutique();
 
+void voirCollection();
+
 void creerJoueur(); //On saisit le nom du nouveau joueur et on décide de sa collection
                     //Dans un fichier portant le nom du joueur on écrit tous les noms de cartes de sa collec, mais
                     //ce ne sont que des strings à ce stade, les cartes ne sont pas encore crées

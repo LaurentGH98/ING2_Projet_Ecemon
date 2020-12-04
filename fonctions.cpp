@@ -45,6 +45,7 @@ void menu()
             break;
         case 4:
             //voir collection
+            voirCollection();
             break;
         case 5:
             //voir règles du jeu
@@ -93,7 +94,36 @@ void afficherBoutique()
 
 }
 
+///--------------------------------------------------VOIR COLLECTION-------------------------------------------------------------
+void voirCollection()
+{
+    int conditionArret=0;//si le fichier s'ouvre, passe à 1
 
+    while (conditionArret==0) //tant que le fichier ne s'ouvre pas on redemande une sausie du nom
+    {
+        std::string nomJoueur;
+        std::cout << "Saisir le nom d un joueur existant" << std::endl;
+        std::cin >> nomJoueur;
+        std::cout << std::endl;
+        std::ifstream Flux((nomJoueur+".txt").c_str());//ouverture du fichier en lecture
+        std::string ligne; //ligne nous permettant de lire le fichier ligne par ligne
+        if (Flux)
+        {
+            std::cout << "La collection de "<< nomJoueur<<" est composee de :" << std::endl;
+            while (getline(Flux, ligne)) //Tant qu'on n'est pas à la fin, on lit une ligne complète
+            {
+                std::cout << ligne << std::endl;
+                conditionArret=1;
+            }
+        }
+        else
+        {
+            std::cout << "ERREUR, aucun fichier a ce nom" <<std::endl;
+        }
+    }
+    std::cout<<std::endl<<std::endl;
+
+}
 
 ///-----------------------------------------------CREER JOUEUR------------------------------------------------------------------
 void creerJoueur()
